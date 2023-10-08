@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('api_tokens', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-			$table->string('name');
-			$table->text('key_secret');
-			$table->text('key_public');
+			$table->string('name')->nullable();
+            $table->bigInteger('amount');
+			$table->text('description')->nullable();
 			$table->foreignId('user_id');
             $table->timestamps();
+			$table->softDeletes();
         });
     }
 
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('api_tokens');
+        Schema::dropIfExists('transactions');
     }
 };
