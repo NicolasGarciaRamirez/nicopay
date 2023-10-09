@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\Api\ApiTokenController;
 use App\Http\Controllers\Balance\BalanceController;
 use App\Http\Controllers\Transactions\TransactionController;
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
