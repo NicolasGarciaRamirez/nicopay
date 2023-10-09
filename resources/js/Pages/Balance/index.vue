@@ -62,7 +62,8 @@ defineProps({
 });
 
 const form = useForm({
-	amount: 0
+	amount: 0,
+	type: 'charge'
 });
 
 const loadBalance = () => {

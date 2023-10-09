@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\api;
 
 use Inertia\Inertia;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Traits\ApiTokenTrait;
 use App\Models\Cards\ApiToken;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
 
 class ApiTokenController extends Controller
 {
+	use ApiTokenTrait;
 	public function index()
     {
         // Recupera todos los tokens API
@@ -33,12 +33,7 @@ class ApiTokenController extends Controller
             // Otros campos de validación si es necesario
         ]);
 
-        // Crea y guarda el token API
-		$apiToken = new ApiToken();
-		$apiToken->name = $request->input('name');
-		$apiToken->key_secret = Hash::make(Str::random(8));
-		$apiToken->key_public = Hash::make(Str::random(8));
-		auth()->user()->apiToken()->save($apiToken);
+		$this->createApiTokens('apiToken', auth()->user());
 
         // Redirige a la lista de tokens API con un mensaje de éxito
         return Inertia::render('ApiTokens/Index');

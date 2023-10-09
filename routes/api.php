@@ -3,6 +3,9 @@
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Plan\PlanController;
+use App\Http\Controllers\Api\ApiAuthController;
+use App\Http\Controllers\Subscription\SubscriptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +30,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 		Route::get('/', 'index')->name('cardsIndex');
 		Route::post('/save', 'save')->name('cardsSave');
 	});
+});
+
+Route::post('auth/token', [ApiAuthController::class, 'login']);
+Route::middleware(['apiauth', 'auth:sanctum'])->group(function(){
+	Route::resource('Plans', PlanController::class );
+	Route::resource('Subscriptions', SubscriptionController::class );
 });

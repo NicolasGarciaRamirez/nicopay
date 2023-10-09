@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
-			$table->string('name')->nullable();
-            $table->bigInteger('amount');
-			$table->text('description')->nullable();
+			$table->string('status');
+			$table->date('start_date');
+			$table->date('end_date');
+			$table->foreignId('plan_id');
 			$table->foreignId('user_id');
-			$table->string('type');
             $table->timestamps();
 			$table->softDeletes();
         });
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('subscriptions');
     }
 };

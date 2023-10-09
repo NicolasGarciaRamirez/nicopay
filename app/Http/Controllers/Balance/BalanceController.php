@@ -23,18 +23,13 @@ class BalanceController extends Controller
         $request->validate([
             'amount' => 'required|numeric|min:0',
         ]);
-
+		// el observador de trransaction crea el balance history automaticamente
 		$transaction = new Transaction();
 		$transaction->amount = $request->input('amount');
 		$transaction->name = 'Carga De Saldo';
-		$transaction->description = 'Carga Saldo Administrator';
+		$transaction->description = 'Carga de saldo';
+		$transaction->type = $request->input('type');
 		$user->transactions()->save($transaction);
-        // Guarda la carga de saldo en la tabla de historial
-        $balance = new BalanceHistory($request->all());
-		$balance->user_id = auth()->user()->id;
-		$balance->amount = $request->input('amount');
-		$balance->transaction_id = $transaction->id;
-		$balance->save();
         // Realiza cualquier otra lógica necesaria para actualizar el saldo del usuario
 
         // Redirige a la página de historial de saldo

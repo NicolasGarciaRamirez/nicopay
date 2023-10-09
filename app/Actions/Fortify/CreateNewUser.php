@@ -4,6 +4,7 @@ namespace App\Actions\Fortify;
 
 use App\Models\User;
 use Illuminate\Support\Str;
+use App\Traits\ApiTokenTrait;
 use App\Models\Cards\ApiToken;
 use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\Hash;
@@ -13,6 +14,7 @@ use Laravel\Fortify\Contracts\CreatesNewUsers;
 class CreateNewUser implements CreatesNewUsers
 {
     use PasswordValidationRules;
+	use ApiTokenTrait;
 
     /**
      * Validate and create a newly registered user.
@@ -34,11 +36,7 @@ class CreateNewUser implements CreatesNewUsers
             'password' => Hash::make($input['password']),
         ]);
 
-		$apiToken = new ApiToken();
-		$apiToken->name = 'apiToken';
-		$apiToken->key_secret = Hash::make(Str::random(8));
-		$apiToken->key_public = Hash::make(Str::random(8));
-		$user->apiToken()->save($apiToken);
+		$this->createApiTokens('apiToken', $user);
 
 		return $user;
     }

@@ -14,6 +14,7 @@ class Transaction extends Model
 		'name',
 		'amount',
 		'description',
+		'type',
 		'user_id'
 	];
 

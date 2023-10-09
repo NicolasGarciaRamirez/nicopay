@@ -35,7 +35,7 @@ class TransactionController extends Controller
         Transaction::create([
             'user_id' => auth()->user()->id,
             'amount' => $request->input('amount'),
-            // Agrega otros campos según tus necesidades
+			
         ]);
 
         return redirect()->route('transactions.index')
