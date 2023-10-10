@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Subscription;
+namespace App\Http\Controllers\Api;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Models\Subscription\Subscription;
 
-class SubscriptionController extends Controller
+class ApiSubscriptionController extends Controller
 {
     public function index()
     {

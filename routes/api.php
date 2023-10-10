@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Plan\PlanController;
 use App\Http\Controllers\Api\ApiAuthController;
+use App\Http\Controllers\Api\ApiTransactionController;
 use App\Http\Controllers\Subscription\SubscriptionController;
 
 /*
@@ -34,6 +35,11 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
 Route::post('auth/token', [ApiAuthController::class, 'login']);
 Route::middleware(['apiauth', 'auth:sanctum'])->group(function(){
-	Route::resource('Plans', PlanController::class );
-	Route::resource('Subscriptions', SubscriptionController::class );
+	Route::group(['prefix'=>'Payments', 'controller' => ApiTransactionController::class], function(){
+		Route::group(['prefix' => 'CreateTransaction'],function(){
+			Route::post('Charge', 'createTransactionCharge');
+			Route::post('Receive', 'createTransactionReceive');
+			Route::post('Send', 'createTransactionSend');
+		});
+	});
 });
